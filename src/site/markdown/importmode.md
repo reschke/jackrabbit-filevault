@@ -25,7 +25,10 @@ Details on how node ids are treated during import are outlined at [Referenceable
 
 The import mode handling is inconsistent and has many edge cases for the mode `MERGE` and `UPDATE`. Therefore FileVault 3.5.0 introduces the new modes `MERGE_PROPERTIES` and `UPDATE_PROPERTIES` (in [JCRVLT-255][JCRVLT-255]) which behave much more predicatable. The details are outlined at the [JavaDoc][api.ImportMode].
 
-Import Mode behaviour on authorizables
+As the import mode has other side effects for authorizable and authorization nodes, the behavior is described in the following sections
+
+
+Authorizable Nodes
 ----------------------------------------------------
 If an authorizable with the same name already exists, the active `ImportMode` controls how the existing authorizables are affected:
 
@@ -58,6 +61,13 @@ Note that the workspace filter of the package refers on the content of the packa
 
 However, the importer keeps track of potential remapping of existing users and tries to calculate the filters accordingly.
 
+Authorization Nodes
+----------------------------------------------------
+
+All authorization nodes of node type `rep:ACL` or the derived `rep:CugPolicy` or `rep:PrincipalPolicy` are ignoring the import mode but rather only evaluate the [package property `acHandling`][properties].
+
+
 [api.WorkspaceFilter]: apidocs/org/apache/jackrabbit/vault/fs/api/WorkspaceFilter.html
 [api.ImportMode]: apidocs/org/apache/jackrabbit/vault/fs/api/ImportMode.html
 [JCRVLT-255]: https://issues.apache.org/jira/browse/JCRVLT-255
+[properties]: properties.html
