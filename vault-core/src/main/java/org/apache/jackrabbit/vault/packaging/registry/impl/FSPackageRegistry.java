@@ -646,6 +646,7 @@ public class FSPackageRegistry extends AbstractPackageRegistry {
 
         Collection<File> files = FileUtils.listFiles(getHomeDir(), META_SUFFIXES, true);
         for (File file : files) {
+            log.info("loading state from {}...", file.getPath());
             FSInstallState state = FSInstallState.fromFile(file);
             if (state != null) {
                 PackageId id = state.getPackageId();
