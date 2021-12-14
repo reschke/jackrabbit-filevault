@@ -30,6 +30,8 @@ import java.util.stream.Stream;
 
 import org.apache.jackrabbit.vault.packaging.PackageId;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Persisted cache of all {@link FSInstallState} objects for all packages in a registry.
@@ -38,6 +40,8 @@ import org.jetbrains.annotations.NotNull;
  * Is thread-safe.
  */
 class FSInstallStateCache extends AbstractMap<PackageId, FSInstallState> {
+
+    private static final Logger log = LoggerFactory.getLogger(FSInstallStateCache.class);
 
     /**
      * Extension for metadata files
@@ -71,6 +75,7 @@ class FSInstallStateCache extends AbstractMap<PackageId, FSInstallState> {
         try (Stream<Path> stream = Files.walk(homeDir, 10)) {
             stream.filter(Files::isRegularFile).filter(p -> p.toString().endsWith(META_EXTENSION)).forEach(
                 p -> {
+                    log.info("loading state from {}...", p);
                     FSInstallState state;
                     try {
                         state = FSInstallState.fromFile(p);
