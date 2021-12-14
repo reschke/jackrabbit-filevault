@@ -184,8 +184,10 @@ public class FSPackageRegistry extends AbstractPackageRegistry {
             if (!this.homeDir.isAbsolute()) {
                 this.homeDir = new File(repoHome + "/" + config.homePath());
             }
+            log.info("checking for presence of {} - exists {} - isDir {}", homeDir.getPath(), homeDir.exists(), homeDir.isDirectory());
             if (!homeDir.exists()) {
-                homeDir.mkdirs();
+                boolean success = homeDir.mkdirs();
+                log.info("mkdirs on {} returned {}", homeDir.getPath(), success);
             }
         }
         this.scope = InstallationScope.valueOf(config.scope());

@@ -31,7 +31,7 @@
     <!-- ====================================================================== -->
     <groupId>org.apache.jackrabbit.vault</groupId>
     <artifactId>parent</artifactId>
-    <version>3.4.0</version>
+    <version>3.4.0-TESTMKDIRS</version>
     <packaging>pom</packaging>
 
     <name>Apache Jackrabbit FileVault (Parent Project)</name>
@@ -174,7 +174,7 @@
                                 <goal>baseline</goal>
                             </goals>
                             <configuration>
-                                <failOnError>true</failOnError>
+                                <failOnError>false</failOnError>
                                 <comparisonVersion>LATEST</comparisonVersion>
                             </configuration>
                         </execution>
