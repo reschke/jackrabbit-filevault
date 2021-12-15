@@ -18,6 +18,7 @@ package org.apache.jackrabbit.vault.packaging.registry.impl;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.AbstractMap;
@@ -76,7 +77,7 @@ class FSInstallStateCache extends AbstractMap<PackageId, FSInstallState> {
         Map<Path, PackageId> idMapping = new HashMap<>();
 
         // recursively find meta file
-        try (Stream<Path> stream = Files.walk(homeDir, 10)) {
+        try (Stream<Path> stream = Files.walk(homeDir, 10, FileVisitOption.FOLLOW_LINKS)) {
             stream.filter(Files::isRegularFile).filter(p -> p.toString().endsWith(META_EXTENSION)).forEach(
                 p -> {
                     log.info("loading state from {}...", p);
