@@ -57,10 +57,14 @@ class FSInstallStateCache extends AbstractMap<PackageId, FSInstallState> {
     private Map<Path, PackageId> pathIdMapping = new ConcurrentHashMap<>();
 
     private final Path homeDir;
-    
+
     public FSInstallStateCache(Path homeDir) throws IOException {
         this.homeDir = homeDir;
-        Files.createDirectories(homeDir);
+        log.info("checking for presence of {} - exists {} - notExists {} - isDir {}", homeDir, Files.exists(homeDir), Files.notExists(homeDir), Files.isDirectory(homeDir));
+        if (Files.notExists(homeDir)) {
+            Path created = Files.createDirectories(homeDir);
+            log.info("Created {}", created);
+        }
     }
 
     /**
